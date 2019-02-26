@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyou100.mapper.SysPermissionMapperCustom" >
+ <!-- 根据用户的id查询菜单 -->
+<select id="findMenuListByUserId" parameterType="string" 
+resultType="com.zhiyou100.pojo.SysPermission">
+SELECT * FROM sys_permission WHERE type='menu' AND id in(
+SELECT sys_permission_id  FROM sys_role_permission 
+WHERE sys_role_id in(
+SELECT sys_role_id FROM sys_user_role WHERE sys_user_id = 'zhangsan'
+)
+)
+</select>
+ 
+ <!-- 根据用户的id查询权限 -->
+ <select id="findPermissionListByUserId" parameterType="string" 
+resultType="com.zhiyou100.pojo.SysPermission">
+SELECT * FROM sys_permission WHERE type='permission' AND id in(
+SELECT sys_permission_id  FROM sys_role_permission 
+WHERE sys_role_id in(
+SELECT sys_role_id FROM sys_user_role WHERE sys_user_id = 'zhangsan'
+)
+)
+</select>
+ 
+</mapper>
